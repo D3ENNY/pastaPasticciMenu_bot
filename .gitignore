@@ -132,4 +132,4 @@ dist
 
 # script node
 
-images/*
+images/*.png
