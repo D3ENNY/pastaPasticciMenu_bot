@@ -12,7 +12,6 @@ const puppeteer = require('puppeteer'),
     await page.goto('https://www.facebook.com/PastaPasticciRistorante/?locale=it_IT'); 
 
     console.log("wait image");
-
     await page.waitForSelector('img');
 
     const images_url = await page.evaluate(() => {
@@ -22,7 +21,7 @@ const puppeteer = require('puppeteer'),
     images_url.length > 28 ? await downloadImage(images_url[28], `images/menu.png`) : console.error("menù non trovato")
 
     console.log("Download completato!");
-
+    
     await browser.close();
 })();
 
