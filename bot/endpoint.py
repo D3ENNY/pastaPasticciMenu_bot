@@ -16,13 +16,13 @@ def receive_menu():
         
         if not json: 
             return jsonify({
-                "error": "No data sent to request"
+                "error": "No JSON data received. Please send a valid JSON request."
             }), 400
 
         image_base64 = json.get("menu_base64")
         if not image_base64:
             return jsonify({
-                "error": "expected menu_base64 data but no data sent"
+                "error": "Missing 'menu_base64' field in the request body."
             }), 400
             
         image_bytes = base64.b64decode(image_base64)
@@ -39,7 +39,7 @@ def receive_menu():
         
     except Exception as ex:
         return jsonify({
-            "error": str(e)
+            "error": f"An error occurred:\n{str(ex)}"
         }), 500
 
 if __name__ == '__main__':
