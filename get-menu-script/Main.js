@@ -58,7 +58,7 @@ async function sendImage(url, filePath) {
             return
         }
 
-        const imageBase64 = getBase64(res.data, res.headers['content-type'])
+        const imageBase64 = await getBase64(res.data, res.headers['content-type'])
 
         axios.post('http://127.0.0.1:5000/api/upload_menu', {
             menu_base64: imageBase64

@@ -1,7 +1,10 @@
-import base64, os
 from flask import Flask, jsonify, request
+import base64, os
+
+from bot import TgBot
 
 app = Flask(__name__)
+bot = TgBot()
 
 @app.route('/api/first_test', methods=['GET'])
 def first_test():
