@@ -299,3 +299,5 @@ cython_debug/
 # BOT
 
 bot/config/*
+bot/pasta e pasticci menù.session
+bot/uploads/*
