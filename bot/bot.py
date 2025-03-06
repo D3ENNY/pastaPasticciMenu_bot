@@ -1,15 +1,15 @@
-from pyrogram import Client
-import json, asyncio
+from pyrogram import Client, filters
+from pyrogram.handlers import MessageHandler  
+import json, asyncio, traceback
 
-
-#load JSON
+# Load JSON
 with open("./config/config.json", 'r') as config:
     bot_config = json.load(config)
 
 class TgBot:
     
     def __init__(self):
-        """inizializzazione del bot"""
+        """Inizializzazione del bot"""
         self.app = Client(
                         bot_config["description"],
                         api_id = bot_config["api_id"],
@@ -17,19 +17,30 @@ class TgBot:
                         bot_token = bot_config["bot_token"]
                     )
     
-    async def send_message_async(self, chat_id, photo, desc):
-        """manda il menu ad una chat"""
-        async with self.app:
-            await self.app.send_photo(chat_id, photo, caption=desc)
-            
-        async def send_message_async(self, chat_id, message):
-            """manda un messaggio ad una chat"""
-            async with self.app:
-                await self.app.send_message(chat_id, message)
-    
-    def send_message(self, chat_id, message, photo=None):
-        """Funzione pubblica per mandare un messaggio"""
-        if not photo:
-            asyncio.run(self.send_message_async(chat_id=chat_id, message=message))
+    async def start_bot(self):
+        """Avvia il bot e verifica se è correttamente connesso"""
+        await self.app.start() 
+        
+        if self.app.me:
+            print(f"Bot is logged in as: {self.app.me.first_name}")
         else:
-            asyncio.run(self.send_message_async(chat_id=chat_id, photo=photo, desc=message))
+            print("Bot failed to login.")
+            
+        
+    async def send_message_async(self, chat_id, photo, desc):
+        """Manda il menu ad una chat"""
+        print(f"Sending message to {chat_id} with description: {desc}")
+        
+        peer = await self.app.resolve_peer("me")
+        print(peer)
+        
+        try:
+            if photo:
+
+                print(f"Sending photo with size: {len(photo.getvalue())} bytes")
+                await self.app.send_photo(chat_id, photo, caption=desc)
+            else:
+                await self.app.send_message(chat_id, desc)
+        except Exception as e:
+            print(f"Error sending message: {e}")
+            #traceback.print_exc()
