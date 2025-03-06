@@ -41,7 +41,7 @@ def receive_menu():
             output.write(image_bytes)
 
         # Avvia la funzione asincrona in un nuovo thread separato
-        loop.run_until_complete(bot.send_message_async(-2229775701, image_binary, "menu del giorno"))
+        loop.run_until_complete(bot.send_message_async(-1002229775701, image_binary, "menu del giorno"))
         
         return jsonify({
             "message": "Image successfully received!", 

@@ -31,9 +31,6 @@ class TgBot:
         """Manda il menu ad una chat"""
         print(f"Sending message to {chat_id} with description: {desc}")
         
-        peer = await self.app.resolve_peer("me")
-        print(peer)
-        
         try:
             if photo:
 
